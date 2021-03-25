@@ -1,0 +1,10 @@
+max3421e.c:17:6:regWr	24	static
+max3421e.c:28:6:regWrN	32	static
+max3421e.c:38:9:regRd	24	static
+max3421e.c:50:6:regRdN	32	static
+max3421e.c:60:9:revisionRd	16	static
+max3421e.c:70:10:maxReset	24	static
+max3421e.c:86:9:maxInit	24	static
+max3421e.c:134:9:maxBusprobe	24	static
+max3421e.c:180:9:maxTask	24	static
+max3421e.c:194:9:maxIntHandler	24	static
