@@ -1,5 +1,12 @@
-core_cm3.h:1762:34:__NVIC_SystemReset	4	static,ignoring_inline_asm
-maxUSB.c:18:9:USB_enumerate	24	static
-maxUSB.c:43:9:USBdispatchToken	16	static
-maxUSB.c:59:9:USBsetAddress	32	static
-maxUSB.c:91:9:USBgetDescriptor	72	static
+maxUSB.c:21:6:setAllEp	4	static
+maxUSB.c:39:9:USB_enumerate	24	static
+maxUSB.c:79:9:USBdispatchPacket	24	static
+maxUSB.c:138:9:USBsetAddress	56	static
+maxUSB.c:173:9:USBgetDescriptor	72	static
+maxUSB.c:280:9:USBsetupDispatch	16	static
+maxUSB.c:320:9:USBgetEpInfoEntry	24	static
+maxUSB.c:331:9:maxSetAddress	24	static
+maxUSB.c:346:9:USBctrlReq	56	static
+maxUSB.c:411:9:USBinTransfer	32	static
+maxUSB.c:463:9:USBoutTransfer	48	static
+maxUSB.c:524:9:USBin_Transfer	48	static

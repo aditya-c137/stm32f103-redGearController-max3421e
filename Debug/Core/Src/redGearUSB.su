@@ -1,0 +1,5 @@
+redGearUSB.c:33:9:RGsetConfiguration	56	static
+redGearUSB.c:68:9:RGgetHIDreportDescriptor	128	static
+redGearUSB.c:106:9:RGpoll	32	static
+redGearUSB.c:111:9:RGinit	88	static
+redGearUSB.c:132:6:RGcommand	72	static

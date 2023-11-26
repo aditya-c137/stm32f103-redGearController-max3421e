@@ -25,6 +25,7 @@
 #include<stdio.h>
 #include "max3421e.h"
 #include "maxregisters.h"
+#include "redGearUSB.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -113,25 +114,56 @@ int main(void)
   MX_TIM4_Init();
   /* USER CODE BEGIN 2 */
   if(maxInit(&hspi2)){
-	  return -1;
+	  goto NO;
   }
   HAL_Delay(10);
-  uint8_t HRSL = USB_enumerate(&hspi2); //This enumerates the USB and sets it's address to 0x01
-  printf("final HRSL: %x\n",HRSL);
+//uint8_t HRSL = USB_enumerate(&hspi2); //This enumerates the USB and sets it's address to 0x01
+//while(!(USBgetDescriptor(&hspi2)));
+//printf("fin: %x\n",USBgetDescriptor(&hspi2));
+//printf("meh\n");
+//uint8_t HRSL = USB_enumerate(&hspi2);
+  allEp[0].epAddr = 0x00;
+	allEp[0].maxPktSize = 0x40;
+	allEp[0].bmNakPower = 0x0e;
+	allEp[1].epAddr = 0x01;
+	allEp[1].epAttribs = 0x03;
+	allEp[1].bmSndToggle = 0x00;
+	allEp[1].bmRcvToggle = 0x00;
+	allEp[1].maxPktSize = 0x20;
+	allEp[1].bmNakPower = 0x01;
+	allEp[2].epAddr = 0x02;
+	allEp[2].epAttribs = 0x03;
+	allEp[2].bmSndToggle = 0x00;
+	allEp[2].bmRcvToggle = 0x00;
+	allEp[2].maxPktSize = 0x20;
+	allEp[2].bmNakPower = 0x01;
+  uint8_t HRSL = RGinit(&hspi2);
+  USBgetDescriptor(&hspi2);
+  printf("Init: %x\n",HRSL);
   printf("Done! set address to %x\n",regRd(&hspi2,rPERADDR));
-//  while(!(USBgetDescriptor(&hspi2)));
-  printf("fin: %x\n",USBgetDescriptor(&hspi2));
-  printf("meh\n");
+  // printf("HID descriptor: %x\n",RGgetHIDreportDescriptor(&hspi2));
+  uint8_t temp;
+  temp = RGpoll(&hspi2);
+	  if(temp != 0x04){
+		  printf("poll RG: %x\n",temp);
+	  }
+	  HAL_Delay(4);
+//  for(int i = 0; i < 10; i++){
+//
+//  }
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
   {
+	  
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
   }
+  NO:
+  printf("Couldn't connect to max!\n");
   /* USER CODE END 3 */
 }
 
@@ -509,23 +541,15 @@ static void MX_GPIO_Init(void)
   GPIO_InitTypeDef GPIO_InitStruct = {0};
 
   /* GPIO Ports Clock Enable */
-  __HAL_RCC_GPIOC_CLK_ENABLE();
   __HAL_RCC_GPIOD_CLK_ENABLE();
   __HAL_RCC_GPIOA_CLK_ENABLE();
   __HAL_RCC_GPIOB_CLK_ENABLE();
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOC, Stepper1_PUL_Pin|Stepper1_DIR_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(GPIOB, Relay_Pin|GPIO_PIN_12|Stepper2_DIR_Pin|Stepper2_PULB5_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOB, Relay_Pin|GPIO_PIN_12|Stepper2_DIR_Pin|Stepper2_PUL_Pin, GPIO_PIN_RESET);
-
-  /*Configure GPIO pins : Stepper1_PUL_Pin Stepper1_DIR_Pin */
-  GPIO_InitStruct.Pin = Stepper1_PUL_Pin|Stepper1_DIR_Pin;
-  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
-  GPIO_InitStruct.Pull = GPIO_NOPULL;
-  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-  HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
+  HAL_GPIO_WritePin(Stepper2_PUL_GPIO_Port, Stepper2_PUL_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin : Host_INT_Pin */
   GPIO_InitStruct.Pin = Host_INT_Pin;
@@ -533,8 +557,8 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Pull = GPIO_PULLUP;
   HAL_GPIO_Init(Host_INT_GPIO_Port, &GPIO_InitStruct);
 
-  /*Configure GPIO pins : Relay_Pin Stepper2_DIR_Pin Stepper2_PUL_Pin */
-  GPIO_InitStruct.Pin = Relay_Pin|Stepper2_DIR_Pin|Stepper2_PUL_Pin;
+  /*Configure GPIO pins : Relay_Pin Stepper2_DIR_Pin Stepper2_PULB5_Pin */
+  GPIO_InitStruct.Pin = Relay_Pin|Stepper2_DIR_Pin|Stepper2_PULB5_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
@@ -546,6 +570,13 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Pull = GPIO_PULLUP;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
+
+  /*Configure GPIO pin : Stepper2_PUL_Pin */
+  GPIO_InitStruct.Pin = Stepper2_PUL_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+  HAL_GPIO_Init(Stepper2_PUL_GPIO_Port, &GPIO_InitStruct);
 
 }
 

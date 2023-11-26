@@ -67,4 +67,11 @@
 //HID report Descriptor
 //TODO: fill this after getting HID report descriptor
 
+
+//function definitions
+uint8_t RGsetConfiguration(SPI_HandleTypeDef *hspi);
+uint8_t RGgetHIDreportDescriptor(SPI_HandleTypeDef *hspi);
+uint8_t RGpoll(SPI_HandleTypeDef *hspi);
+uint8_t RGinit(SPI_HandleTypeDef *hspi);
+void RGcommand(SPI_HandleTypeDef *hspi, uint8_t* data, uint16_t nbytes);
 #endif /* INC_REDGEARUSB_H_ */

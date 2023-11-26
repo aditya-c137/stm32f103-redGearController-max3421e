@@ -60,10 +60,6 @@ void Error_Handler(void);
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/
-#define Stepper1_PUL_Pin GPIO_PIN_13
-#define Stepper1_PUL_GPIO_Port GPIOC
-#define Stepper1_DIR_Pin GPIO_PIN_14
-#define Stepper1_DIR_GPIO_Port GPIOC
 #define Encoder1_A_Pin GPIO_PIN_0
 #define Encoder1_A_GPIO_Port GPIOA
 #define Encoder1_B_Pin GPIO_PIN_1
@@ -92,10 +88,12 @@ void Error_Handler(void);
 #define Moror3_PWM_GPIO_Port GPIOA
 #define Motor3_DIR_Pin GPIO_PIN_11
 #define Motor3_DIR_GPIO_Port GPIOA
+#define Stepper2_PUL_Pin GPIO_PIN_12
+#define Stepper2_PUL_GPIO_Port GPIOA
 #define Stepper2_DIR_Pin GPIO_PIN_4
 #define Stepper2_DIR_GPIO_Port GPIOB
-#define Stepper2_PUL_Pin GPIO_PIN_5
-#define Stepper2_PUL_GPIO_Port GPIOB
+#define Stepper2_PULB5_Pin GPIO_PIN_5
+#define Stepper2_PULB5_GPIO_Port GPIOB
 #define Servo4_Pin GPIO_PIN_6
 #define Servo4_GPIO_Port GPIOB
 #define Servo3_Pin GPIO_PIN_7

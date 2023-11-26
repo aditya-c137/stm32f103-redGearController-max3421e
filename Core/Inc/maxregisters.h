@@ -154,9 +154,12 @@
 
 #define rHRSL 0xf8     //1f<<3 r31
 //HRSL bits
-#define bm
-// #define bm
-// #define bm
-// #define bm
+/* HRSL Bits */
+#define bmRCVTOGRD  0x10
+#define bmSNDTOGRD  0x20
+#define bmKSTATUS   0x40
+#define bmJSTATUS   0x80
+#define bmSE0       0x00    //SE0 - disconnect state
+#define bmSE1       0xc0    //SE1 - illegal state
 
 #endif /* INC_MAXRESGISTERS_H_ */
